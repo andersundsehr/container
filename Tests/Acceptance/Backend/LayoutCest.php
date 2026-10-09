@@ -230,7 +230,7 @@ class LayoutCest
         $I->waitForElementNotVisible('#t3js-ui-block');
         $I->click('Close');
         $I->waitForElementNotVisible('#t3js-ui-block');
-        $I->canSeeElement($selector . ' .t3js-flag[title="german"]');
+        $I->canSeeElement($selector . ' .t3js-flag [title="german"]');
     }
 
     public function canTranslateChildWithTranslationModule(BackendTester $I, PageTree $pageTree, Scenario $scenario): void
@@ -269,7 +269,7 @@ class LayoutCest
 
         if ($I->getTypo3MajorVersion() > 13) {
             $I->waitForText('english');
-            $I->click('.module-docheader-bar-column button');
+            $I->openLanguageMenu();
             $I->waitForText('german');
             $I->executeJS("document.querySelector('typo3-backend-localization-button').click()");
             $I->switchToIFrame();

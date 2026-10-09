@@ -62,8 +62,9 @@ class BackendTester extends \Codeception\Actor
             $this->waitForElement('#element-tt_content-' . $uid . ' typo3-backend-contextual-record-edit-trigger');
             $this->click('#element-tt_content-' . $uid . ' typo3-backend-contextual-record-edit-trigger');
             $this->switchToMainFrame();
-            $this->waitForElement('iframe[name="context_panel_frame"]', 10);
-            $this->switchToIFrame('context_panel_frame');
+            $frame = version_compare((new Typo3Version())->getBranch(), '14.3', '>=') ? 'modal_frame' : 'context_panel_frame';
+            $this->waitForElement('iframe[name="' . $frame . '"]', 10);
+            $this->switchToIFrame($frame);
             $this->waitForElementNotVisible('#t3js-ui-block');
             $this->click('a.t3js-contextual-fullscreen');
             $this->switchToMainFrame();
@@ -88,8 +89,10 @@ class BackendTester extends \Codeception\Actor
 
     public function clickNewContentElement(string $colPosSelector): void
     {
-        $this->waitForElement($colPosSelector);
-        $this->click($colPosSelector . ' typo3-backend-new-content-element-wizard-button');
+        $buttonSelector = $colPosSelector . ' typo3-backend-new-content-element-wizard-button';
+        $this->waitForElementVisible($buttonSelector);
+        $this->executeJS("document.querySelector(arguments[0]).scrollIntoView({block: 'center', behavior: 'instant'});", [$buttonSelector]);
+        $this->click($buttonSelector);
     }
 
     public function getNewContentElementLabel(): string
@@ -120,11 +123,19 @@ class BackendTester extends \Codeception\Actor
             $this->click('german');
         } else {
             $this->waitForText('english');
-            //$this->click('english');
-            $this->click('.module-docheader-bar-column button');
+            $this->openLanguageMenu();
             $this->waitForText('german');
             $this->click('german');
         }
+    }
+
+    public function openLanguageMenu(): void
+    {
+        $selector = version_compare((new Typo3Version())->getBranch(), '14.3', '>=')
+            ? '.module-docheader-navigation .dropdown-toggle'
+            : '.module-docheader-bar-column button';
+        $this->waitForElementVisible($selector);
+        $this->click($selector);
     }
 
     public function selectLanguageComparisonMode(): void
