@@ -21,7 +21,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install testing system
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -t ${{ matrix.TYPO3 }} -s composerInstall
+        shell: bash
+        run: |
+          set -o pipefail
+          Build/Scripts/runTests.sh -p ${{ matrix.php }} -t ${{ matrix.TYPO3 }} -s composerInstall 2>&1 | tee /tmp/php85-install.log
+      - name: Report dependency installation failure
+        if: failure()
+        run: |
+          if [ -f /tmp/php85-install.log ]; then
+            python3 -c 'import pathlib; s=pathlib.Path("/tmp/php85-install.log").read_text()[-5000:]; print("::error::"+s.replace("%","%25").replace("\r","%0D").replace("\n","%0A"))'
+          fi
 
       - name: Composer validate
         run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -t ${{ matrix.TYPO3 }} -s composerValidate
