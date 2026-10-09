@@ -82,3 +82,4 @@ jobs:
         run: |
           if [ -f /tmp/php85-tests.log ]; then
             python3 -c 'import pathlib; s=pathlib.Path("/tmp/php85-tests.log").read_text()[-5000:]; print("::error::"+s.replace("%","%25").replace("\r","%0D").replace("\n","%0A"))'
+          fi
