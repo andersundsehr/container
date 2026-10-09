@@ -52,11 +52,17 @@ jobs:
         if: matrix.TYPO3 == '13'
 
       - name: Functional Tests 14
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -t ${{ matrix.TYPO3 }} -s functional
+        shell: bash
+        run: |
+          set -o pipefail
+          Build/Scripts/runTests.sh -p ${{ matrix.php }} -t ${{ matrix.TYPO3 }} -s functional 2>&1 | tee /tmp/php85-tests.log
         if: matrix.TYPO3 != '13'
 
       - name: Acceptance Tests
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -t ${{ matrix.TYPO3 }} -s acceptance -- --fail-fast
+        shell: bash
+        run: |
+          set -o pipefail
+          Build/Scripts/runTests.sh -p ${{ matrix.php }} -t ${{ matrix.TYPO3 }} -s acceptance -- --fail-fast 2>&1 | tee /tmp/php85-tests.log
       - name: Archive acceptance tests results
         uses: actions/upload-artifact@v4
         if: always()
@@ -70,3 +76,9 @@ jobs:
         with:
           name: composer.lock-${{ matrix.php }}-${{ matrix.TYPO3 }}
           path: composer.lock
+
+      - name: Report test failure
+        if: failure()
+        run: |
+          if [ -f /tmp/php85-tests.log ]; then
+            python3 -c 'import pathlib; s=pathlib.Path("/tmp/php85-tests.log").read_text()[-5000:]; print("::error::"+s.replace("%","%25").replace("\r","%0D").replace("\n","%0A"))'

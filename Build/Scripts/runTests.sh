@@ -153,7 +153,7 @@ Options:
         Specifies the TYPO3 Core version to be used - Only with -s composerInstall|phpstan|acceptance
           - 13: Use TYPO3 v13.x
           - 14: Use TYPO3 v14.x
-          - 14-dev Use TYPO3 14.2.x-dev
+          - 14-dev Use TYPO3 14.3.x-dev
 
     -a <mysqli|pdo_mysql>
         Only with -s functional|functionalDeprecated
@@ -598,7 +598,7 @@ case ${TEST_SUITE} in
 
             if [ "${TYPO3}" == "14-dev" ]; then
               composer require \"enshrined/svg-sanitize:1.0.0 as 0.22.99\" --dev --no-update --sort-packages --no-interaction
-              composer require typo3/cms-core:14.3.x-dev --dev -W --no-progress --no-interaction
+              sh Build/Scripts/installTypo3Dev.sh
             elif [ ${TYPO3} -eq 14 ]; then
               composer require \"enshrined/svg-sanitize:1.0.0 as 0.22.99\" --dev --no-update --sort-packages --no-interaction
               composer require typo3/cms-core:^14.1 --dev -W --no-progress --no-interaction
@@ -620,7 +620,7 @@ case ${TEST_SUITE} in
             php -v | grep '^PHP';
             if [ "${TYPO3}" == "14-dev" ]; then
               composer require \"enshrined/svg-sanitize:1.0.0 as 0.22.99\" --dev --no-update --sort-packages --no-interaction
-              composer require typo3/cms-core:14.3.x-dev --dev -W --no-progress --no-interaction
+              sh Build/Scripts/installTypo3Dev.sh
             elif [ ${TYPO3} -eq 14 ]; then
               composer require \"enshrined/svg-sanitize:1.0.0 as 0.22.99\" --dev --no-update --sort-packages --no-interaction
               composer require typo3/cms-core:^14.1 --dev -W --no-progress --no-interaction
