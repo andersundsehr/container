@@ -597,13 +597,13 @@ case ${TEST_SUITE} in
             php -v | grep '^PHP';
 
             if [ "${TYPO3}" == "14-dev" ]; then
-              composer require "enshrined/svg-sanitize:1.0.0 as 0.22.99" --dev --no-update --sort-packages --no-interaction
+              composer require \"enshrined/svg-sanitize:1.0.0 as 0.22.99\" --dev --no-update --sort-packages --no-interaction
               composer require typo3/cms-core:14.2.x-dev --dev -W --no-progress --no-interaction
             elif [ ${TYPO3} -eq 14 ]; then
-              composer require "enshrined/svg-sanitize:1.0.0 as 0.22.99" --dev --no-update --sort-packages --no-interaction
+              composer require \"enshrined/svg-sanitize:1.0.0 as 0.22.99\" --dev --no-update --sort-packages --no-interaction
               composer require typo3/cms-core:^14.1 --dev -W --no-progress --no-interaction
             else
-              composer require "enshrined/svg-sanitize:1.0.0 as 0.22.99" --dev --no-update --sort-packages --no-interaction
+              composer require \"enshrined/svg-sanitize:1.0.0 as 0.22.99\" --dev --no-update --sort-packages --no-interaction
               composer require typo3/cms-core:^13.4 ichhabrecht/content-defender --dev -W --no-progress --no-interaction
             fi
           "
@@ -619,13 +619,13 @@ case ${TEST_SUITE} in
           ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-validate-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "
             php -v | grep '^PHP';
             if [ "${TYPO3}" == "14-dev" ]; then
-              composer require "enshrined/svg-sanitize:1.0.0 as 0.22.99" --dev --no-update --sort-packages --no-interaction
+              composer require \"enshrined/svg-sanitize:1.0.0 as 0.22.99\" --dev --no-update --sort-packages --no-interaction
               composer require typo3/cms-core:14.2.x-dev --dev -W --no-progress --no-interaction
             elif [ ${TYPO3} -eq 14 ]; then
-              composer require "enshrined/svg-sanitize:1.0.0 as 0.22.99" --dev --no-update --sort-packages --no-interaction
+              composer require \"enshrined/svg-sanitize:1.0.0 as 0.22.99\" --dev --no-update --sort-packages --no-interaction
               composer require typo3/cms-core:^14.1 --dev -W --no-progress --no-interaction
             else
-              composer require "enshrined/svg-sanitize:1.0.0 as 0.22.99" --dev --no-update --sort-packages --no-interaction
+              composer require \"enshrined/svg-sanitize:1.0.0 as 0.22.99\" --dev --no-update --sort-packages --no-interaction
               composer require typo3/cms-core:^13.4 ichhabrecht/content-defender --dev -W --no-progress --no-interaction
             fi
             composer validate
