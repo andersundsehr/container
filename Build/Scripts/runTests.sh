@@ -144,10 +144,10 @@ Options:
 
     -p <8.2|8.3|8.4|8.5>
         Specifies the PHP minor version to be used
-            - 8.2 (default): use PHP 8.2
+            - 8.2: use PHP 8.2
             - 8.3: use PHP 8.3
             - 8.4: use PHP 8.4
-            - 8.5: use PHP 8.5
+            - 8.5 (default): use PHP 8.5
 
     -t <13|14|14-dev>
         Specifies the TYPO3 Core version to be used - Only with -s composerInstall|phpstan|acceptance
@@ -286,7 +286,7 @@ TEST_SUITE="help"
 COMPOSER_ROOT_VERSION="2.3.7-dev"
 DBMS="mariadb"
 DBMS_VERSION=""
-PHP_VERSION="8.2"
+PHP_VERSION="8.5"
 PHP_XDEBUG_ON=0
 PHP_XDEBUG_PORT=9003
 TYPO3="12"
@@ -597,10 +597,13 @@ case ${TEST_SUITE} in
             php -v | grep '^PHP';
 
             if [ "${TYPO3}" == "14-dev" ]; then
+              composer require "enshrined/svg-sanitize:1.0.0 as 0.22.99" --dev --no-update --sort-packages --no-interaction
               composer require typo3/cms-core:14.2.x-dev --dev -W --no-progress --no-interaction
             elif [ ${TYPO3} -eq 14 ]; then
+              composer require "enshrined/svg-sanitize:1.0.0 as 0.22.99" --dev --no-update --sort-packages --no-interaction
               composer require typo3/cms-core:^14.1 --dev -W --no-progress --no-interaction
             else
+              composer require "enshrined/svg-sanitize:1.0.0 as 0.22.99" --dev --no-update --sort-packages --no-interaction
               composer require typo3/cms-core:^13.4 ichhabrecht/content-defender --dev -W --no-progress --no-interaction
             fi
           "
@@ -616,10 +619,13 @@ case ${TEST_SUITE} in
           ${CONTAINER_BIN} run ${CONTAINER_COMMON_PARAMS} --name composer-validate-${SUFFIX} -e COMPOSER_CACHE_DIR=.cache/composer -e COMPOSER_ROOT_VERSION=${COMPOSER_ROOT_VERSION} ${IMAGE_PHP} /bin/sh -c "
             php -v | grep '^PHP';
             if [ "${TYPO3}" == "14-dev" ]; then
+              composer require "enshrined/svg-sanitize:1.0.0 as 0.22.99" --dev --no-update --sort-packages --no-interaction
               composer require typo3/cms-core:14.2.x-dev --dev -W --no-progress --no-interaction
             elif [ ${TYPO3} -eq 14 ]; then
+              composer require "enshrined/svg-sanitize:1.0.0 as 0.22.99" --dev --no-update --sort-packages --no-interaction
               composer require typo3/cms-core:^14.1 --dev -W --no-progress --no-interaction
             else
+              composer require "enshrined/svg-sanitize:1.0.0 as 0.22.99" --dev --no-update --sort-packages --no-interaction
               composer require typo3/cms-core:^13.4 ichhabrecht/content-defender --dev -W --no-progress --no-interaction
             fi
             composer validate
