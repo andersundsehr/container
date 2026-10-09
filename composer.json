@@ -3,7 +3,9 @@
     "description": "Create Custom Container Content Elements for TYPO3",
     "type": "typo3-cms-extension",
     "homepage": "https://b13.com",
-    "license": ["GPL-2.0-or-later"],
+    "license": [
+        "GPL-2.0-or-later"
+    ],
     "require": {
         "typo3/cms-backend": "^13.4 || ^14.1 || 14.2.x-dev"
     },
@@ -28,7 +30,7 @@
         }
     },
     "require-dev": {
-        "b13/container-example": "dev-task/v4",
+        "b13/container-example": "dev-task/v4 || ^4.0",
         "typo3/cms-install": "^13.4 || ^14.1 || 14.2.x-dev",
         "typo3/cms-fluid-styled-content": "^13.4 || ^14.1 || 14.2.x-dev",
         "typo3/cms-info": "^13.4 || ^14.1 || 14.2.x-dev",
