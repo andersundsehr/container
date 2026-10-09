@@ -89,8 +89,10 @@ class BackendTester extends \Codeception\Actor
 
     public function clickNewContentElement(string $colPosSelector): void
     {
-        $this->waitForElement($colPosSelector);
-        $this->click($colPosSelector . ' typo3-backend-new-content-element-wizard-button');
+        $buttonSelector = $colPosSelector . ' typo3-backend-new-content-element-wizard-button';
+        $this->waitForElementVisible($buttonSelector);
+        $this->executeJS("document.querySelector(arguments[0]).scrollIntoView({block: 'center', behavior: 'instant'});", [$buttonSelector]);
+        $this->click($buttonSelector);
     }
 
     public function getNewContentElementLabel(): string
@@ -121,14 +123,19 @@ class BackendTester extends \Codeception\Actor
             $this->click('german');
         } else {
             $this->waitForText('english');
-            $selector = version_compare((new Typo3Version())->getBranch(), '14.3', '>=')
-                ? '.module-docheader-navigation .dropdown-toggle'
-                : '.module-docheader-bar-column button';
-            $this->waitForElementVisible($selector);
-            $this->click($selector);
+            $this->openLanguageMenu();
             $this->waitForText('german');
             $this->click('german');
         }
+    }
+
+    public function openLanguageMenu(): void
+    {
+        $selector = version_compare((new Typo3Version())->getBranch(), '14.3', '>=')
+            ? '.module-docheader-navigation .dropdown-toggle'
+            : '.module-docheader-bar-column button';
+        $this->waitForElementVisible($selector);
+        $this->click($selector);
     }
 
     public function selectLanguageComparisonMode(): void
