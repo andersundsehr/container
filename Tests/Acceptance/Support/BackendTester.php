@@ -62,8 +62,9 @@ class BackendTester extends \Codeception\Actor
             $this->waitForElement('#element-tt_content-' . $uid . ' typo3-backend-contextual-record-edit-trigger');
             $this->click('#element-tt_content-' . $uid . ' typo3-backend-contextual-record-edit-trigger');
             $this->switchToMainFrame();
-            $this->waitForElement('iframe[name="context_panel_frame"]', 10);
-            $this->switchToIFrame('context_panel_frame');
+            $frame = version_compare((new Typo3Version())->getBranch(), '14.3', '>=') ? 'modal_frame' : 'context_panel_frame';
+            $this->waitForElement('iframe[name="' . $frame . '"]', 10);
+            $this->switchToIFrame($frame);
             $this->waitForElementNotVisible('#t3js-ui-block');
             $this->click('a.t3js-contextual-fullscreen');
             $this->switchToMainFrame();
