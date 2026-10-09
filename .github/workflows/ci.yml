@@ -32,6 +32,9 @@ jobs:
             python3 -c 'import pathlib; s=pathlib.Path("/tmp/php85-install.log").read_text(); lines=s.splitlines(); selected={j for i,l in enumerate(lines) if __import__("re").match(r"^(?:[0-9]+\)|There (?:was|were)|Time:|Tests:|OK|FAILURES|ERRORS)",l) for j in range(i,min(len(lines),i+12))}; s="\n".join(lines[j] for j in sorted(selected))[:5000]; print("::error::"+s.replace("%","%25").replace("\r","%0D").replace("\n","%0A"))'
           fi
 
+      - name: Prepare the installed classic-mode test fixture metadata
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -t ${{ matrix.TYPO3 }} -s composer -- exec -- php Build/Scripts/prepareTestExtensionMetadata.php
+
       - name: Composer validate
         run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -t ${{ matrix.TYPO3 }} -s composerValidate
 
