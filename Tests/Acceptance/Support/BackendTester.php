@@ -121,8 +121,11 @@ class BackendTester extends \Codeception\Actor
             $this->click('german');
         } else {
             $this->waitForText('english');
-            //$this->click('english');
-            $this->click('.module-docheader-bar-column button');
+            $selector = version_compare((new Typo3Version())->getBranch(), '14.3', '>=')
+                ? '.module-docheader-navigation .dropdown-toggle'
+                : '.module-docheader-bar-column button';
+            $this->waitForElementVisible($selector);
+            $this->click($selector);
             $this->waitForText('german');
             $this->click('german');
         }
